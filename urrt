@@ -1,0 +1,52 @@
+class Controll {
+  constructor(limit) {
+    // 待执行的任务队列
+    this.waitTasks = []; 
+    // 正在执行的任务队列
+    this.runTasks = []; 
+    // 允许同时运行的任务数量
+    this.limit = limit; 
+  }
+  //添加任务
+  add(task) {
+    //当前执行任务队列小于并发限制，就执行该任务
+    if (this.runTasks.length < this.limit) {
+      this.run(task);
+    } else {
+      //将该任务添加到等待队列
+      this.waitTasks.push(task);
+    }
+  }
+  //执行任务
+  run(task) {
+    //push添加元素并返回新的数组长度
+    const len = this.runTasks.push(task);
+    const index = len - 1;
+    task().then(() => {
+      //执行完后删除任务
+      this.runTasks.splice(index, 1);
+      if (this.waitTasks.length > 0) {
+        //执行并删除等待队列中的第一个任务
+        this.run(this.waitTasks.shift());
+      }
+    });
+  }
+}
+ 
+//测试：允许同时执行2个任务
+const scheduler = new Controll(2);
+//添加任务
+const addTask = (time, order) => {
+  scheduler.add(async () => {
+    //定时器打印
+    await new Promise((resolve) => {
+      setTimeout(resolve, time);//定时器时间到了就resolve执行成功，然后打印结果
+    });
+    console.log(order);
+  });
+};
+//添加任务，参数为定时器时间和打印数字
+addTask(1000, "1");
+addTask(500, "2");
+addTask(300, "3");
+addTask(400, "4");
