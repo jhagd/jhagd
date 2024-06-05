@@ -1,0 +1,42 @@
+        //判断是否预警
+//        mainVoList.stream().forEach(e -> {
+//            //到期时间要比现在时间晚
+//            if (LocalDate.now().isBefore(e.getEndDate())) {
+//                e.setIsWarning(false);
+//            } else {
+//                e.setIsWarning(true);
+//            }
+//        });
+
+
+  private static <T> Predicate<T> distinctByField(Function<? super T, ?> fieldExtractor) {
+        Map<Object, Boolean> map = new ConcurrentHashMap<>(16);
+        return t -> map.putIfAbsent(fieldExtractor.apply(t), Boolean.TRUE) == null;
+    }
+
+package com.example.demotest;
+
+import lombok.Data;
+
+/**
+ * @author wanglin
+ * @version 1.0
+ * @date 2022-03-16 周三
+ */
+@Data
+public class Student {
+    private String name;
+    private String address;
+    private Integer age;
+    private Double score;
+    public Student() {
+
+    }
+    public Student(String name, String address, Integer age, Double score) {
+        this.name = name;
+        this.address = address;
+        this.age = age;
+        this.score = score;
+    }
+}
+
