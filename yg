@@ -1,0 +1,39 @@
+import com.wechat.pay.contrib.apache.httpclient.util.PemUtil;
+import org.springframework.stereotype.Component;
+ 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.security.PrivateKey;
+ 
+/**
+ * 微信支付工具类
+ */
+@Component
+public class WxPayUtils {
+ 
+    // 商户号
+    public static final String mchId = "xxxxxxx";
+    // AppID(小程序ID)
+    public static final String appId = "xxxxxxx";
+    // AppSecret(小程序密钥)
+    public static final String appSecret = "xxxxxxx";
+    // 授权
+    public final static String grantType = "authorization_code";
+    // APIv3密钥
+    public final static String apiV3Key = "xxxxxxx";
+    // 证书序列号 (从p12文件解析)
+    public final static String serialnumber = "xxxxxxx";
+ 
+ 
+    // 证书私钥
+    public static final String privateKey = "xxxxxxx";
+ 
+ 
+    /**
+     * 获取私钥。
+     */
+    public static PrivateKey getPrivateKey() throws IOException {
+        // TODO
+        return merchantPrivateKey;
+    }
+}
