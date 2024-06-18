@@ -1,0 +1,18 @@
+SELECT 
+    T.pk_id,
+	T.NAME,
+	T.pinyin,
+	T.classz,
+	T.bz,
+	T.slx,
+	st_x ( T.geom ) lon,
+	st_y ( T.geom ) lat,
+	st_distance ( T.geom :: geography, t1.geom :: geography ) dist 
+FROM
+	biz_geographic_name T,
+	biz_ceic_earthquake t1 
+WHERE
+	t1.pk_id = 1792871415574196226 
+	AND st_dwithin ( T.geom :: geography, t1.geom :: geography, 100000 ) 
+ORDER BY
+	dist
