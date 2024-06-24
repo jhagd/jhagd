@@ -1,0 +1,14 @@
+      // 当滑动到底部还有100rpx时，就会触发这个函数执行---》发送请求获取数据
+  onReachBottom() {
+    console.log('下拉了')
+    // 发送请求获取数据
+    wx.request({
+      url: 'http://127.0.0.1:8000/random',
+      method:'GET',
+      success:(res)=>{
+          this.setData({
+            good_list:this.data.good_list.concat(res.data)
+          })
+      }
+    })
+  },
